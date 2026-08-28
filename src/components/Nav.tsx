@@ -13,7 +13,7 @@ export default function Nav() {
   const pathname = usePathname();
 
   return (
-    <header className="border-b border-black/[.08] dark:border-white/[.145]">
+    <header className="bg-blue-950">
       <nav className="mx-auto flex max-w-3xl items-center gap-6 px-6 py-4">
         {links.map(({ href, label }) => {
           const isActive = pathname === href;
@@ -23,8 +23,8 @@ export default function Nav() {
               href={href}
               className={`text-sm font-medium transition-colors ${
                 isActive
-                  ? "text-foreground"
-                  : "text-zinc-500 hover:text-foreground dark:text-zinc-400"
+                  ? "text-white"
+                  : "text-blue-200/70 hover:text-white"
               }`}
             >
               {label}
