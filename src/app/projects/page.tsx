@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion, type Variants } from "motion/react";
 
 type Project = {
@@ -10,6 +11,7 @@ type Project = {
   description: string[];
   tech: string[];
   github: string | null;
+  image?: string;
   comingSoon?: boolean;
 };
 
@@ -32,35 +34,45 @@ const PROJECTS: Project[] = [
     github: "https://github.com/sametarslan7/my-portfolio-claude",
   },
   {
-    id: "coming-soon-1",
-    title: "Coming Soon",
-    shortDescription: "One of my personal app ideas — currently in progress.",
+    id: "shezy",
+    title: "Shezy",
+    shortDescription:
+      "A sunbed rental site that lets beachgoers find and book a spot online instead of guessing on-site.",
     description: [
-      "This project is still being built.",
-      "Details will be added here once it's ready to share.",
+      "Browse sunbed locations and see pricing up front, before ever leaving home.",
+      "Reserve a spot in a few taps instead of showing up and hoping one's free.",
+      "A companion app keeps bookings and updates handy on the go.",
     ],
-    tech: ["AI Engineering"],
-    github: null,
-    comingSoon: true,
+    tech: ["Next.js", "React", "Tailwind CSS"],
+    github: "https://github.com/sametarslan7/shezy",
+    image: "/projects/shezy.jpg",
   },
   {
-    id: "coming-soon-2",
-    title: "Coming Soon",
-    shortDescription: "Another project in the works — check back later.",
+    id: "restoran-app",
+    title: "QR Table Ordering",
+    shortDescription:
+      "Scan a QR code at your table, order food, and call a waiter — no flagging anyone down.",
     description: [
-      "This project is still being built.",
-      "Details will be added here once it's ready to share.",
+      "Customers order straight from their phone by scanning the table's QR code — no app install, no waiting to catch a waiter's eye.",
+      "A one-tap \"call waiter\" request replaces awkward hand-waving across the room.",
+      "Kitchen and waitstaff see new orders the instant they're placed, so food comes out faster.",
+      "Table status, bills, and order history are tracked automatically, so the restaurant always knows what's going on.",
     ],
-    tech: ["Flutter"],
-    github: null,
-    comingSoon: true,
+    tech: ["Node.js", "Express", "Socket.IO", "MongoDB"],
+    github: "https://github.com/sametarslan7/restoran-app",
+    image: "/projects/restoran-app.jpg",
   },
 ];
 
 const TECH_STACK = [
   "Next.js",
+  "React",
   "TypeScript",
   "Tailwind CSS",
+  "Node.js",
+  "Express",
+  "Socket.IO",
+  "MongoDB",
   "Flutter",
   "Dart",
   "Test Automation",
@@ -81,7 +93,29 @@ const item: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
-function CardThumb({ title, comingSoon }: { title: string; comingSoon?: boolean }) {
+function CardThumb({
+  title,
+  image,
+  comingSoon,
+}: {
+  title: string;
+  image?: string;
+  comingSoon?: boolean;
+}) {
+  if (image) {
+    return (
+      <div className="relative h-40 w-full overflow-hidden rounded-lg">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          sizes="(min-width: 640px) 50vw, 100vw"
+          className="object-cover"
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       className={`flex h-40 w-full items-center justify-center rounded-lg ${
@@ -194,7 +228,11 @@ export default function Projects() {
               }`}
             >
               <div className="relative">
-                <CardThumb title={project.title} comingSoon={project.comingSoon} />
+                <CardThumb
+                  title={project.title}
+                  image={project.image}
+                  comingSoon={project.comingSoon}
+                />
                 {project.comingSoon && (
                   <span className="absolute left-2 top-2 rounded-full bg-blue-950 px-2.5 py-1 text-xs font-medium text-white dark:bg-blue-400 dark:text-blue-950">
                     Coming Soon
@@ -279,7 +317,11 @@ export default function Projects() {
                 </svg>
               </button>
 
-              <CardThumb title={selected.title} comingSoon={selected.comingSoon} />
+              <CardThumb
+                title={selected.title}
+                image={selected.image}
+                comingSoon={selected.comingSoon}
+              />
 
               <h2 className="mt-5 text-2xl font-semibold tracking-tight text-zinc-900 dark:text-white">
                 {selected.title}
