@@ -14,7 +14,7 @@ export default function Nav() {
 
   return (
     <header className="bg-blue-950">
-      <nav className="mx-auto flex max-w-3xl items-center gap-6 px-6 py-4">
+      <nav className="mx-auto flex max-w-3xl items-center justify-center gap-6 px-6 py-4">
         {links.map(({ href, label }) => {
           const isActive = pathname === href;
           return (
